@@ -1,6 +1,6 @@
-import java.io.Serializable;
+package PrimeraPractica;
 
-public class Humano extends Mamifero implements PoderVolar{
+public class Humano extends Mamifero implements PoderVolar {
     private int numPiernas;
     private int numBrazos;
     private String nombre;
