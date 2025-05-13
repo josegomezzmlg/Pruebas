@@ -26,7 +26,7 @@ public class Coche extends Automovil implements PoderVolar {
 
     @Override
     public void volar() {
-        System.out.println("Para que el "+marca+" "+modelo+" salga volando tiene q meter 4 y activar las luces de emergencia");
+        System.out.println("Para que el "+marca+" "+modelo+" salga volando tiene q meter 4º y activar las luces de emergencia");
 
     }
 }
