@@ -1,3 +1,5 @@
+package PrimeraPractica;
+
 public abstract class  Mamifero {
 
     protected boolean viviparo;

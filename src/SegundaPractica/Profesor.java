@@ -1,4 +1,30 @@
 package SegundaPractica;
 
-public class Profesor {
+public class Profesor extends Persona {
+    private String codProf;
+    private String [] codClase;
+
+    public Profesor(String nombre, String apellido, int edad, String codProf, String[] codClase) {
+        super(nombre, apellido, edad);
+        this.codProf = codProf;
+        this.codClase = codClase;
+    }
+
+    public String getCodProf() {
+        return codProf;
+    }
+
+    public void setCodProf(String codProf) {
+        this.codProf = codProf;
+    }
+
+    public String[] getcodClase() {
+        return codClase;
+    }
+
+    public void setcodClase(String[] codClase) {
+        this.codClase = codClase;
+    }
+
+
 }
