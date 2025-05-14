@@ -2,12 +2,14 @@ package SegundaPractica;
 
 public class Profesor extends Persona {
     private String codProf;
-    private String [] codClase;
+    private String codClase;
 
-    public Profesor(String nombre, String apellido, int edad, String codProf, String[] codClase) {
+
+    public Profesor(String nombre, String apellido, int edad, String codProf, String codClase) {
         super(nombre, apellido, edad);
         this.codProf = codProf;
         this.codClase = codClase;
+
     }
 
     public String getCodProf() {
@@ -18,13 +20,11 @@ public class Profesor extends Persona {
         this.codProf = codProf;
     }
 
-    public String[] getcodClase() {
+    public String getCodClase() {
         return codClase;
     }
-
-    public void setcodClase(String[] codClase) {
+    public void setCodClase(String codClase) {
         this.codClase = codClase;
     }
-
 
 }

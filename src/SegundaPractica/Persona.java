@@ -28,4 +28,10 @@ public abstract class Persona {
         this.edad = edad;
     }
 
+    @Override
+    public  String toString() {
+        return "nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", edad=" + edad;
+    }
 }
