@@ -8,7 +8,7 @@ public class Clase {
 
     public Clase(String codClase) {
         this.codClase = codClase;
-        this.profesor = "Sin asignar";
+        this.profesor = "- - - - -";
         this.alumnos = new ArrayList<>();
     }
 

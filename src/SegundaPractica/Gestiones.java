@@ -4,11 +4,30 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Gestiones {
-    private final Scanner teclado = new Scanner(System.in);
-    final ArrayList<Clase> listaClases;
+    private final ArrayList<Clase> listaClases;
+    private final Scanner teclado;
 
     public Gestiones() {
         this.listaClases = new ArrayList<>();
+        this.teclado = new Scanner(System.in);
+    }
+
+    private Clase buscarClase(String codigo) {
+        for (Clase c : listaClases) {
+            if (c.getCodClase().equalsIgnoreCase(codigo)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    private Alumnos buscarAlumno(Clase clase, String codigoAlumno) {
+        for (Alumnos a : clase.getAlumnos()) {
+            if (a.getCodAlumno().equalsIgnoreCase(codigoAlumno)) {
+                return a;
+            }
+        }
+        return null;
     }
 
     public void CrearClase() {
@@ -35,86 +54,134 @@ public class Gestiones {
         String nombre = teclado.next();
         System.out.println("Introduce el apellido del alumno: ");
         String apellido = teclado.next();
-        System.out.println("Introduce el edad del alumno: ");
+        System.out.println("Introduce la edad del alumno: ");
         int edad = teclado.nextInt();
-        System.out.println("Introduce el codigo del alumno: ");
+        System.out.println("Introduce el código del alumno: ");
         String codigo = teclado.next();
-        System.out.println("Introduce el codigo de la clase a la que va el alumno");
-        String clase = teclado.next();
+        if (codigo.startsWith("A")) {
+            System.out.println("Introduce el código de la clase a la que va el alumno: ");
+            String codClase = teclado.next();
 
-        Alumnos alumno = new Alumnos(nombre, apellido, edad, codigo, clase);
+            Clase clase = buscarClase(codClase);
+            if (clase != null) {
+                Alumnos alumno = new Alumnos(nombre, apellido, edad, codigo, codClase);
+                clase.agregarAlumno(alumno);
+                System.out.println("Alumno agregado a la clase " + codClase);
+                mostrarInformacionClase(codClase);
+            } else {
+                System.out.println("No existe la clase " + codClase);
+            }
+        }else System.out.println("El codigo del alumno debe empzar por 'A'");
 
-        for (Clase c : listaClases) {
-            if (c.getCodClase().equalsIgnoreCase(clase)) {
-                c.agregarAlumno(alumno);
-                System.out.println("Alumno agregado a la clase " + clase);
-                break;
-            } else System.out.println("No existe la clase " + clase);
-        }
-        mostrarInformacionClase(clase);
     }
 
     public void crearProfesor() {
-        System.out.println("Introduce el nombre del Profesor: ");
+        System.out.println("Introduce el nombre del profesor: ");
         String nombre = teclado.next();
-        System.out.println("Introduce el apellido del Profesor: ");
+        System.out.println("Introduce el apellido del profesor: ");
         String apellido = teclado.next();
-        System.out.println("Introduce el edad del Profesor: ");
+        System.out.println("Introduce la edad del profesor: ");
         int edad = teclado.nextInt();
-        System.out.println("Introduce el codigo del Profesor: ");
+        System.out.println("Introduce el código del profesor: ");
         String codigo = teclado.next();
-        System.out.println("Introduce el codigo de la clase del profesor: ");
-        String clase = teclado.next();
+        if (codigo.startsWith("P")) {
+            System.out.println("Introduce el código de la clase del profesor: ");
+            String codClase = teclado.next();
 
-        new Profesor(nombre, apellido, edad, codigo, clase);
+            Clase clase = buscarClase(codClase);
+            if (clase != null) {
+                clase.setProfesor(codigo);
+                System.out.println("Profesor agregado a la clase " + codClase);
+                mostrarInformacionClase(codClase);
+            } else {
+                System.out.println("No existe la clase " + codClase);
+            }
+        }else System.out.println("El codigo del profesor debe empezar por 'P'");
 
-        for (Clase c : listaClases) {
-            if (c.getCodClase().equalsIgnoreCase(clase)) {
-                c.setProfesor(codigo);
-                System.out.println("Profesor agregado a la clase " + clase);
-                break;
-            } else System.out.println("No existe la clase " + clase);
-        }
-        mostrarInformacionClase(clase);
     }
 
-    public void mostrarInformacionClase(String clase) {
-        for (Clase c : listaClases) {
-            if (c.getCodClase().equalsIgnoreCase(clase)) {
-                System.out.println("El profesor de esta clase es " + c.getProfesor());
-                System.out.println(" La clase " + clase + " tiene como alumnos: ");
-                for (Alumnos alumnos : c.getAlumnos()) {
-                    System.out.println(" - " + alumnos);
+    public void mostrarInformacionClase(String codClase) {
+        Clase clase = buscarClase(codClase);
+        if (clase != null) {
+            if (clase.getProfesor() != null) {
+                System.out.println("El profesor de esta clase es " + clase.getProfesor());
+                if (clase.getAlumnos() != null) {
+                    System.out.println("La clase " + codClase + " tiene como alumnos:");
+                    for (Alumnos alumnos : clase.getAlumnos()) {
+                        System.out.println(" - " + alumnos);
                 }
+                }
+            }else System.out.println("La clase no tiene ningun profesor asignado");
 
-            }
+        } else {
+            System.out.println("No existe la clase " + codClase);
         }
     }
 
     public void ponerNotas() {
         System.out.println("Introduce la clase: ");
-        String clase = teclado.next();
-        for (Clase c : listaClases) {
-            if (c.getCodClase().equalsIgnoreCase(clase)) {
-                System.out.println("Cual es su codigo de profesor: ");
-                String codigo = teclado.next();
-                if (c.getProfesor().equalsIgnoreCase(codigo)) {
-                    System.out.println("Introduzca el codigo del alumno: ");
-                    String alumno = teclado.next();
-                    for (Alumnos alumnos : c.getAlumnos()) {
-                        if (alumnos.getCodAlumno().equalsIgnoreCase(alumno)) {
-                            System.out.println("Introduca la nota que le quieres poner al alumno " + alumno);
-                            double nota = teclado.nextDouble();
-                            alumnos.setNota(nota);
-                            System.out.println("Se le ha asignado la nota al alumno " + alumno + " de manera correcta");
-                        } else System.out.println("No existe el alumno " + alumno + " en esta clase");
-                    }
-                } else System.out.println("El codigo de profesor no corresponde a esta clase");
-            } else System.out.println("No existe la clase " + clase);
+        String codClase = teclado.next();
+        Clase clase = buscarClase(codClase);
 
+        if (clase == null) {
+            System.out.println("No existe la clase " + codClase);
+            return;
+        }
+
+        System.out.println("¿Cuál es su código de profesor?: ");
+        String codProfesor = teclado.next();
+
+        if (!clase.getProfesor().equalsIgnoreCase(codProfesor)) {
+            System.out.println("El código de profesor no corresponde a esta clase");
+            return;
+        }
+
+        System.out.println("Introduce el código del alumno: ");
+        String codAlumno = teclado.next();
+        Alumnos alumno = buscarAlumno(clase, codAlumno);
+
+        if (alumno != null) {
+            System.out.println("Introduce la nota que le quieres poner al alumno " + codAlumno);
+            double nota = teclado.nextDouble();
+            alumno.setNota(nota);
+            System.out.println("Se ha asignado la nota correctamente al alumno " + codAlumno);
+            hablarProfesor(codProfesor,nota);
+            hablarAlumno(codAlumno,nota);
+
+        } else {
+            System.out.println("No existe el alumno " + codAlumno + " en esta clase");
+        }
+    }
+
+    public String hablarProfesor(String codigo,double nota) {
+        if (codigo.startsWith("P")) {
+            System.out.println("Hola soy el profesor "+ codigo +" y te he puesto un "+nota);
+            return "Poniendo notas";
+        } else {
+            System.out.println("Yo no he puesto ninguna nota hoy :-) ");
+            return "No puede poner notas";
+        }
+    }
+
+    public String hablarAlumno(String codigo,double nota) {
+        if (codigo.startsWith("A")) {
+            if (nota < 5) {
+                System.out.println(codigo + ": Me ha faltado mucho para alcanzar los conocimientos, en el proximo lo hare mejor.");
+            } else if (nota < 7) {
+                System.out.println(codigo + ": No está mal, pero podría ser mejor, prometo mejorar");
+            } else if (nota < 9) {
+                System.out.println(codigo + ": Estoy contento con mi resultado, me he esforzado mucho");
+            } else {
+                System.out.println(codigo + ": ¡SÍÍÍ! ¡¡Un sobresaliente!!");
+            }
+            return "Aceptando nota";
+        } else {
+            System.out.println("No me han puesto ninguna nota ");
+            return "No me han puesto ninguna nota";
         }
     }
 }
+
 
 
 
