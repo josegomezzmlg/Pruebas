@@ -22,9 +22,11 @@ public class Main {
                   gestiones.mostrarClases();
                   break;
                   case 2:
+                      System.out.println("ATENCION -- El codigo de los alumnos siempre debe empezar por 'A'");
                       gestiones.crearAlumno();
                       break;
                       case 3:
+                          System.out.println("ATENCION -- El codigo de los profesores siempre debe empezar por 'P'");
                           gestiones.crearProfesor();
                           break;
                           case 4:
