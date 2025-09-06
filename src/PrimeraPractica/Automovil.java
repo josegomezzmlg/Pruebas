@@ -1,3 +1,5 @@
+package PrimeraPractica;
+
 public abstract class Automovil {
     protected int ruedas;
     protected String marca;

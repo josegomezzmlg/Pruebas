@@ -1,6 +1,6 @@
-import java.io.Serializable;
+package PrimeraPractica;
 
-public class Humano extends Mamifero implements PoderVolar{
+public class Humano extends Mamifero implements PoderVolar {
     private int numPiernas;
     private int numBrazos;
     private String nombre;
@@ -39,7 +39,7 @@ public class Humano extends Mamifero implements PoderVolar{
     @Override
     public void volar() {
         System.out.println(nombre+" da un gran salto juntando las piernas...");
-        System.out.println("y entonces "+nombre+" levanta el brazo y sale VOLANDO !!!");
+        System.out.println("y entonces levanta el brazo y sale VOLANDO !!!");
 
     }
 
